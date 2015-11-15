@@ -1,6 +1,5 @@
 ﻿using Microsoft.WindowsAzure.Storage;
 using NDomain.Configuration;
-using NDomain.EventSourcing.Azure;
 using NDomain.Bus.Transport.Azure.Queues;
 using System;
 using System.Collections.Generic;
@@ -12,15 +11,6 @@ namespace NDomain.Configuration
 {
     public static class AzureConfigurator
     {
-        public static EventSourcingConfigurator WithAzureTableStorage(this EventSourcingConfigurator configurator,
-                                                                     CloudStorageAccount account,
-                                                                     string tableName)
-        {
-            configurator.EventStoreDb = new AzureEventStore(account, tableName);
-
-            return configurator;
-        }
-
         public static BusConfigurator WithAzureQueues(this BusConfigurator configurator,
                                                       CloudStorageAccount account,
                                                       string queueName)

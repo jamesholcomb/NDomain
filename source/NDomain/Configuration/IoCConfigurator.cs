@@ -44,10 +44,8 @@ namespace NDomain.Configuration
                 var resolver = context.Resolver as DefaultDependencyResolver;
 
                 resolver.Register(context);
-                resolver.Register(context.EventStore);
                 resolver.Register(context.EventBus);
                 resolver.Register(context.CommandBus);
-                resolver.RegisterGenericTypeDef(typeof(IAggregateRepository<>), typeof(AggregateRepository<>));
             }
 
             // hack, so that AutofacConfigurator can also register components on container

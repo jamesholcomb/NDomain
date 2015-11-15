@@ -11,13 +11,9 @@ namespace NDomain
 {
     public interface IDomainContext : IDisposable
     {
-        IEventStore EventStore { get; }
 
         IEventBus EventBus { get; }
         ICommandBus CommandBus { get; }
-
-        IAggregateRepository<T> GetRepository<T>()
-            where T : IAggregate;
 
         void StartProcessors();
         void StopProcessors();

@@ -1,15 +1,11 @@
 ﻿using NDomain.Bus;
-using NDomain.EventSourcing;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NDomain.CQRS
 {
-    public class EventBus : IEventBus, IEventStoreBus
+    public class EventBus : IEventBus
     {
         readonly IMessageBus messageBus;
 
@@ -30,36 +26,11 @@ namespace NDomain.CQRS
             return this.messageBus.Send(messages);
         }
 
-        public Task Publish(IAggregateEvent<JObject> @event)
-        {
-            var message = BuildMessage(@event);
-            return this.messageBus.Send(message);
-        }
-
-        public Task Publish(IEnumerable<IAggregateEvent<JObject>> events)
-        {
-            var messages = events.Select(e => BuildMessage(e)).ToArray();
-            return this.messageBus.Send(messages);
-        }
-
         private Message BuildMessage(IEvent ev)
         {
             var headers = new Dictionary<string, string> 
             {
                 { CqrsMessageHeaders.DateUtc, ev.DateUtc.ToBinary().ToString() }
-            };
-
-            var message = new Message(ev.Payload, ev.Name, headers);
-            return message;
-        }
-
-        private Message BuildMessage(IAggregateEvent ev)
-        {
-            var headers = new Dictionary<string, string>
-            {
-                { CqrsMessageHeaders.DateUtc, ev.DateUtc.ToBinary().ToString() },
-                { CqrsMessageHeaders.AggregateId, ev.AggregateId },
-                { CqrsMessageHeaders.SequenceId, ev.SequenceId.ToString() }
             };
 
             var message = new Message(ev.Payload, ev.Name, headers);

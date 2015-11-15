@@ -1,5 +1,4 @@
-﻿using NDomain.EventSourcing;
-using NDomain.IoC;
+﻿using NDomain.IoC;
 using NDomain.Logging;
 using System;
 using System.Collections.Generic;
@@ -18,14 +17,10 @@ namespace NDomain.Configuration
     {
         public ContextBuilder()
         {
-            this.EventSourcingConfigurator = new EventSourcingConfigurator(this);
             this.BusConfigurator = new BusConfigurator(this);
             this.LoggingConfigurator = new LoggingConfigurator(this);
             this.IoCConfigurator = new IoCConfigurator(this);
         }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public EventSourcingConfigurator EventSourcingConfigurator { get; private set; }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BusConfigurator BusConfigurator { get; private set; }
@@ -37,7 +32,6 @@ namespace NDomain.Configuration
         public IoCConfigurator IoCConfigurator { get; private set; }
 
         // using Lazy's to avoid managing dependencies between configurators and to ensure no circular references exist
-        public Lazy<IEventStore> EventStore { get; set; }
         public Lazy<IMessageBus> MessageBus { get; set; }
         public Lazy<ISubscriptionManager> SubscriptionManager { get; set; }
         public Lazy<IEnumerable<IProcessor>> Processors { get; set; }
@@ -54,7 +48,7 @@ namespace NDomain.Configuration
                 this.Configuring(this);
             }
 
-            var context = new DomainContext(this.EventStore.Value,
+            var context = new DomainContext(
                                             new EventBus(this.MessageBus.Value),
                                             new CommandBus(this.MessageBus.Value),
                                             this.Processors.Value,
@@ -72,12 +66,6 @@ namespace NDomain.Configuration
             context.StartProcessors();
 
             return context;
-        }
-
-        public ContextBuilder EventSourcing(Action<EventSourcingConfigurator> configurer)
-        {
-            configurer(this.EventSourcingConfigurator);
-            return this;
         }
 
         public ContextBuilder Bus(Action<BusConfigurator> configurer)

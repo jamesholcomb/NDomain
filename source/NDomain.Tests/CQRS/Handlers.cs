@@ -56,26 +56,26 @@ namespace NDomain.Tests.CQRS
 
     public class CounterEventsHandler
     {
-        readonly Action<IAggregateEvent> onMsg;
+        readonly Action<IEvent> onMsg;
 
-        public CounterEventsHandler(Action<IAggregateEvent> onMsg)
+        public CounterEventsHandler(Action<IEvent> onMsg)
         {
             this.onMsg = onMsg;
         }
 
-        public Task On(IAggregateEvent<Sample.CounterIncremented> ev)
+        public Task On(IEvent<Sample.CounterIncrementedEvent> ev)
         {
             this.onMsg(ev);
             return Task.FromResult(true);
         }
 
-        public Task On(IAggregateEvent<Sample.CounterMultiplied> ev)
+        public Task On(IEvent<Sample.CounterMultipliedEvent> ev)
         {
             this.onMsg(ev);
             return Task.FromResult(true);
         }
 
-        public Task On(IAggregateEvent<Sample.CounterReset> ev)
+        public Task On(IEvent<Sample.CounterResetEvent> ev)
         {
             this.onMsg(ev);
             return Task.FromResult(true);

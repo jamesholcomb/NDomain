@@ -67,25 +67,11 @@ namespace NDomain.Configuration
             return processorConfigurator;
         }
 
-        public static ProcessorConfigurator RegisterAggregateEventHandler<TMessage>(this ProcessorConfigurator processorConfigurator,
-                                                                                    string handlerName,
-                                                                                     Func<IAggregateEvent<TMessage>, Task> handlerFunc)
-        {
-            processorConfigurator.Configuring += processor => SubscribeAggregateEvent<TMessage, object>(
-                                                                processor,
-                                                                handlerName,
-                                                                (_, msg) => handlerFunc(msg),
-                                                                new object()); //dummy instance
-
-            return processorConfigurator;
-        }
-
         private static void RegisterCQRSHandler<THandler>(Processor processor, THandler instance = null)
             where THandler : class
         {
             var commandHandlers = ReflectionUtils.FindCommandHandlerMethods<THandler>();
             var eventHandlers = ReflectionUtils.FindEventHandlerMethods<THandler>();
-            var aggregateEventHandlers = ReflectionUtils.FindAggregateEventHandlerMethods<THandler>();
 
             var handlerName = typeof(THandler).Name;
 
@@ -101,14 +87,6 @@ namespace NDomain.Configuration
             {
                 var messageType = handler.Key;
                 typeof(CQRSExtensions).GetMethod("SubscribeEvent", BindingFlags.Static | BindingFlags.NonPublic)
-                                        .MakeGenericMethod(messageType, typeof(THandler))
-                                        .Invoke(null, new object[] { processor, handlerName, handler.Value, instance });
-            }
-
-            foreach (var handler in aggregateEventHandlers)
-            {
-                var messageType = handler.Key;
-                typeof(CQRSExtensions).GetMethod("SubscribeAggregateEvent", BindingFlags.Static | BindingFlags.NonPublic)
                                         .MakeGenericMethod(messageType, typeof(THandler))
                                         .Invoke(null, new object[] { processor, handlerName, handler.Value, instance });
             }
@@ -132,16 +110,6 @@ namespace NDomain.Configuration
             where THandler : class
         {
             var handler = new EventMessageHandler<TMessage, THandler>(handlerFunc, instance);
-            processor.RegisterMessageHandler<TMessage>(handlerName, handler);
-        }
-
-        private static void SubscribeAggregateEvent<TMessage, THandler>(Processor processor,
-                                                                        string handlerName,
-                                                                        Func<THandler, IAggregateEvent<TMessage>, Task> handlerFunc,
-                                                                        THandler instance = null)
-            where THandler : class
-        {
-            var handler = new AggregateEventMessageHandler<TMessage, THandler>(handlerFunc, instance);
             processor.RegisterMessageHandler<TMessage>(handlerName, handler);
         }
     }

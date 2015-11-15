@@ -55,8 +55,24 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nunit.core, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnitTestAdapter.2.0.0\lib\nunit.core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.core.interfaces, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnitTestAdapter.2.0.0\lib\nunit.core.interfaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.util, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnitTestAdapter.2.0.0\lib\nunit.util.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NUnit.VisualStudio.TestAdapter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=4cb40d35494691ac, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnitTestAdapter.2.0.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -69,31 +85,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aggregates\AggregateFactoryTests.cs" />
-    <Compile Include="Aggregates\AggregateTests.cs" />
     <Compile Include="Configuration\DomainContextTests.cs" />
     <Compile Include="CQRS\Handlers.cs" />
-    <Compile Include="Sample\Counter.cs" />
-    <Compile Include="Aggregates\RepositoryTests.cs" />
     <Compile Include="Bus\BusIntegrationTests.cs" />
     <Compile Include="Bus\MessageBusTests.cs" />
-    <Compile Include="EventSourcing\EventStoreSerializerTests.cs" />
-    <Compile Include="Sample\Race.cs" />
-    <Compile Include="Sample\RaceEvents.cs" />
-    <Compile Include="Sample\RaceState.cs" />
     <Compile Include="Bus\Subscriptions\LocalSubscriptionBrokerTests.cs" />
     <Compile Include="Bus\Subscriptions\LocalSubscriptionStoreTests.cs" />
+    <Compile Include="Sample\Counter.cs" />
     <Compile Include="Specs\SubscriptionBrokerSpecs.cs" />
     <Compile Include="Bus\Subscriptions\SubscriptionManagerTests.cs" />
     <Compile Include="Specs\SubscriptionStoreSpecs.cs" />
     <Compile Include="Bus\Transport\LocalMessagingClientTests.cs" />
     <Compile Include="CQRS\CommandBusTests.cs" />
     <Compile Include="CQRS\EventBusTests.cs" />
-    <Compile Include="Specs\EventStoreSpecs.cs" />
     <Compile Include="CQRS\Commands.cs" />
     <Compile Include="Bus\MessageWorkerTests.cs" />
     <Compile Include="Specs\TransportSpecs.cs" />
-    <Compile Include="EventSourcing\LocalEventStoreTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +112,9 @@
       <Project>{538d0501-9c7e-419a-8eee-2d379b2a1118}</Project>
       <Name>NDomain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

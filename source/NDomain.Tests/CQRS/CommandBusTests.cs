@@ -71,16 +71,16 @@ namespace NDomain.Tests.CQRS
                 var idx = i;
                 syncs[i] = new CountdownEvent(2);
                 contexts[i] = DomainContext.Configure()
-                                         .Bus(b =>
-                                             b.WithCustomSubscriptionStore(subscriptionStore)
-                                              .WithCustomSubscriptionBroker(subscriptionBroker)
-                                              .WithCustomTransportFactory(transportFactory)
-                                              .WithProcessor(p =>
-                                                 p.Endpoint("p" + idx)
-                                                  .RegisterHandler(new TestCommandHandler(cmd => syncs[idx].Signal())
-                                              ))
-                                          )
-                                          .Start();
+                  .Bus(b =>
+                     b.WithCustomSubscriptionStore(subscriptionStore)
+                        .WithCustomSubscriptionBroker(subscriptionBroker)
+                        .WithCustomTransportFactory(transportFactory)
+                        .WithProcessor(p =>
+                           p.Endpoint("p" + idx)
+                           .RegisterHandler(new TestCommandHandler(cmd => syncs[idx].Signal())
+                        ))
+                  )
+                  .Start();
             }
 
             try

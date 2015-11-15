@@ -22,9 +22,6 @@ namespace NDomain.Configuration
 
                 builder.RegisterInstance(context.CommandBus);
                 builder.RegisterInstance(context.EventBus);
-                builder.RegisterInstance(context.EventStore).As<IEventStore>();
-                builder.RegisterGeneric(typeof(AggregateRepository<>))
-                       .As(typeof(IAggregateRepository<>)).SingleInstance();
 
                 // usually command/event handlers
                 foreach (var knownType in b.KnownTypes)
