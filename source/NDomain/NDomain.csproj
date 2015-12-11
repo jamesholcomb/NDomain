@@ -69,6 +69,7 @@
     <Compile Include="Bus\Subscriptions\SubscriptionChange.cs" />
     <Compile Include="Bus\Subscriptions\SubscriptionSet.cs" />
     <Compile Include="Configuration\Configurator.cs" />
+    <Compile Include="Configuration\EventSourcingConfigurator.cs" />
     <Compile Include="Configuration\IoCConfigurator.cs" />
     <Compile Include="Configuration\LoggingConfigurator.cs" />
     <Compile Include="Configuration\BusConfigurator.cs" />
@@ -78,6 +79,8 @@
     <Compile Include="CQRS\EventBus.cs" />
     <Compile Include="CQRS\CqrsMessageHeaders.cs" />
     <Compile Include="CQRS\Handlers\MessageHandlerBase.cs" />
+    <Compile Include="CQRS\ICommandHandler.cs" />
+    <Compile Include="CQRS\IEventHandler.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="Bus\Subscriptions\ISubscriptionManager.cs" />
     <Compile Include="Bus\Subscriptions\Subscription.cs" />

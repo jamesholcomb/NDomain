@@ -13,28 +13,28 @@ using NDomain.CQRS;
 
 namespace NDomain
 {
-    public class DomainContext : IDomainContext
-    {
-        readonly IEventBus eventBus;
-        readonly ICommandBus commandBus;
-        readonly IEnumerable<IProcessor> processors;
-        readonly ILoggerFactory loggerFactory;
-        readonly IDependencyResolver resolver;
+	public class DomainContext : IDomainContext
+	{
+		readonly IEventBus eventBus;
+		readonly ICommandBus commandBus;
+		readonly IEnumerable<IProcessor> processors;
+		readonly ILoggerFactory loggerFactory;
+		readonly IDependencyResolver resolver;
 
 
-        public DomainContext(
-                             IEventBus eventBus,
-                             ICommandBus commandBus,
-                             IEnumerable<IProcessor> processors,
-                             ILoggerFactory loggerFactory,
-                             IDependencyResolver resolver)
-        {
-            this.eventBus = eventBus;
-            this.commandBus = commandBus;
-            this.processors = processors;
-            this.loggerFactory = loggerFactory;
-            this.resolver = resolver;
-        }
+		public DomainContext(
+							 IEventBus eventBus,
+							 ICommandBus commandBus,
+							 IEnumerable<IProcessor> processors,
+							 ILoggerFactory loggerFactory,
+							 IDependencyResolver resolver)
+		{
+			this.eventBus = eventBus;
+			this.commandBus = commandBus;
+			this.processors = processors;
+			this.loggerFactory = loggerFactory;
+			this.resolver = resolver;
+		}
 
         public IEventBus EventBus { get { return this.eventBus; } }
         public ICommandBus CommandBus { get { return this.commandBus; } }

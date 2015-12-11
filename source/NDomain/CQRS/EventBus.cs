@@ -14,7 +14,7 @@ namespace NDomain.CQRS
             this.messageBus = messageBus;
         }
 
-        public Task Publish<T>(IEvent<T> @event)
+        public Task Publish(IEvent @event)
         {
             var message = BuildMessage(@event);
             return this.messageBus.Send(message);

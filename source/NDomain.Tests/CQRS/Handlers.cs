@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NDomain.Tests.CQRS
 {
-    public class TestCommandHandler
+    public class TestCommandHandler : ICommandHandler<DoSimple>
     {
         readonly Action<ICommand> onMsg;
 
@@ -54,8 +54,11 @@ namespace NDomain.Tests.CQRS
         }
     }
 
-    public class CounterEventsHandler
-    {
+    public class CounterEventsHandler :
+		IEventHandler<Sample.CounterIncrementedEvent>,
+		IEventHandler<Sample.CounterResetEvent>,
+		IEventHandler<Sample.CounterMultipliedEvent>
+	{
         readonly Action<IEvent> onMsg;
 
         public CounterEventsHandler(Action<IEvent> onMsg)

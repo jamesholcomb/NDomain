@@ -114,7 +114,9 @@ namespace NDomain.Bus
                 this.logger.Error(ex, "Failed to receive message");
             }
 
-            return transaction;
+			this.logger.Debug("Received {0}", transaction.Message.Name);
+
+			return transaction;
         }
 
         private void AcquireSlot()

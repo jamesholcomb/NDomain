@@ -11,7 +11,6 @@ namespace NDomain
 {
     public interface IDomainContext : IDisposable
     {
-
         IEventBus EventBus { get; }
         ICommandBus CommandBus { get; }
 

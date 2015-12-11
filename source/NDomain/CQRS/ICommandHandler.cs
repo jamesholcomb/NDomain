@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace NDomain.CQRS
 {
-    public interface IEventBus
-    {
-        Task Publish(IEvent @event);
-        Task Publish(IEnumerable<IEvent> events);
-    }
+   public interface ICommandHandler<TCommand>
+   {
+      Task Handle(ICommand<TCommand> c);
+   }
 }

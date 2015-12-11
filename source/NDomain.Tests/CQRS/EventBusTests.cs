@@ -35,21 +35,22 @@ namespace NDomain.Tests.CQRS
 			// act
 			using (ctx)
 			{
-            await ctx.EventBus.Publish(new Event<CounterIncrementedEvent>(DateTime.Now, new CounterIncrementedEvent()));
-            await ctx.EventBus.Publish(new Event<CounterIncrementedEvent>(DateTime.Now, new CounterIncrementedEvent()));
-            await ctx.EventBus.Publish(new Event<CounterIncrementedEvent>(DateTime.Now, new CounterIncrementedEvent()));
-            //// when one event is published as part of saving changes
-            //await repository.CreateOrUpdate<Counter>(aggregateId, c => c.Increment());
+				var ev = new Event<CounterIncrementedEvent>(new CounterIncrementedEvent());
+				await ctx.EventBus.Publish(ev);
+				await ctx.EventBus.Publish(ev);
+				await ctx.EventBus.Publish(ev);
+				//// when one event is published as part of saving changes
+				//await repository.CreateOrUpdate<Counter>(aggregateId, c => c.Increment());
 
-            //// when multiple events are published as part of saving changes
-            //await repository.CreateOrUpdate<Counter>(aggregateId,
-            //	 c =>
-            //	 {
-            //		 c.Increment(2);
-            //		 c.Multiply(5);
-            //	 });
+				//// when multiple events are published as part of saving changes
+				//await repository.CreateOrUpdate<Counter>(aggregateId,
+				//	 c =>
+				//	 {
+				//		 c.Increment(2);
+				//		 c.Multiply(5);
+				//	 });
 
-            sync.Wait(TimeSpan.FromSeconds(2));
+				sync.Wait(TimeSpan.FromSeconds(2));
 			}
 
 			// assert
