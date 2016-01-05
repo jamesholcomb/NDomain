@@ -25,7 +25,10 @@ namespace NDomain.CQRS
 			get { return this.payload; }
 		}
 
-		string IEvent.Name { get { return this.name; } }
+		string IEvent.Name
+		{
+			get { return this.name; }
+		}
 
 		DateTime IEvent.DateUtc
 		{

@@ -75,6 +75,7 @@
     <Compile Include="Configuration\BusConfigurator.cs" />
     <Compile Include="Bus\Processor.cs" />
     <Compile Include="Configuration\CQRSExtensions.cs" />
+    <Compile Include="Configuration\ProcessorConfigurator.cs" />
     <Compile Include="CQRS\CommandBus.cs" />
     <Compile Include="CQRS\EventBus.cs" />
     <Compile Include="CQRS\CqrsMessageHeaders.cs" />

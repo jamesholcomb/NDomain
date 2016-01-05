@@ -30,12 +30,13 @@ namespace NDomain.Logging
 
         public void Debug(string message, params object[] args)
         {
-            System.Diagnostics.Debug.WriteLine(BuildMessage(message, args));
+			Trace.WriteLine(BuildMessage(message, args));
+            //System.Diagnostics.Debug.WriteLine(BuildMessage(message, args));
         }
 
         public void Info(string message, params object[] args)
         {
-            Trace.TraceInformation(BuildMessage(message, args));
+			Trace.TraceInformation(BuildMessage(message, args));
         }
 
         public void Warn(string message, params object[] args)

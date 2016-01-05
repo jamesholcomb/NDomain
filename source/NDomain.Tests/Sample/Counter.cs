@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NDomain.Tests.Sample
 {
-   public class CounterIncrementedEvent
+   public class CounterIncremented
    {
       public int Increment { get; set; }
    }

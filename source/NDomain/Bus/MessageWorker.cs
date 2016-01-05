@@ -37,7 +37,9 @@ namespace NDomain.Bus
             this.workCount = 0;
 
             this.runningWaitHandle = new ManualResetEventSlim(false);
-            this.workerTask = Task.Factory.StartNew(async () => await this.Work(), TaskCreationOptions.LongRunning);
+			this.workerTask = Task.Factory
+				.StartNew(async () => await this.Work(), TaskCreationOptions.LongRunning);
+				//.ContinueWith((task) => this.logger.Error(task.Exception, string.Empty), TaskContinuationOptions.OnlyOnFaulted);
         }
 
         public void Start()
@@ -114,7 +116,10 @@ namespace NDomain.Bus
                 this.logger.Error(ex, "Failed to receive message");
             }
 
-			this.logger.Debug("Received {0}", transaction.Message.Name);
+			this.logger.Debug("Received message {0} for {1} on {2}",
+				transaction.Message.Name,
+				transaction.Message.Headers[MessageHeaders.Component],
+				transaction.Message.Headers[MessageHeaders.Endpoint]);
 
 			return transaction;
         }
@@ -157,7 +162,7 @@ namespace NDomain.Bus
             catch (Exception ex)
             {
                 this.logger.Error(ex,
-                                     "Failed to process message {0} with id {1}",
+                                     "Exception caught processing message {0} with id {1}",
                                      transaction.Message.Name,
                                      transaction.Message.Id);
 

@@ -55,7 +55,7 @@ namespace NDomain.Tests.CQRS
     }
 
     public class CounterEventsHandler :
-		IEventHandler<Sample.CounterIncrementedEvent>,
+		IEventHandler<Sample.CounterIncremented>,
 		IEventHandler<Sample.CounterResetEvent>,
 		IEventHandler<Sample.CounterMultipliedEvent>
 	{
@@ -66,7 +66,7 @@ namespace NDomain.Tests.CQRS
             this.onMsg = onMsg;
         }
 
-        public Task On(IEvent<Sample.CounterIncrementedEvent> ev)
+        public Task On(IEvent<Sample.CounterIncremented> ev)
         {
             this.onMsg(ev);
             return Task.FromResult(true);

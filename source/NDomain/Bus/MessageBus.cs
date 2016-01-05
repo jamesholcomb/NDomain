@@ -79,7 +79,7 @@ namespace NDomain.Bus
          transportMessage.Headers[MessageHeaders.Endpoint] = subscription.Endpoint; // destination queue / processor
          transportMessage.Headers[MessageHeaders.Component] = subscription.Component; //handler within the processor
 
-         this.logger.Debug("Sending {0} to {1}", transportMessage.Name, subscription.Endpoint);
+         this.logger.Debug("Sending message {0} for {1} on {2}", transportMessage.Name, subscription.Component, subscription.Endpoint);
 
          return transportMessage;
       }

@@ -42,7 +42,7 @@ namespace NDomain.Tests.Bus
 		{
 			var cb = new ContextBuilder();
 			var pc = new ProcessorConfigurator(cb, config => config.RegisterHandlers(Assembly.GetExecutingAssembly()));
-			pc.Configure(this.subscriptionManager, this.messagingFactory, NullLoggerFactory.Instance, this.resolver);
+			var processor = pc.Configure(this.subscriptionManager, this.messagingFactory, NullLoggerFactory.Instance, this.resolver);
 
 			var actual = pc.Builder.IoCConfigurator.KnownTypes;
 
@@ -67,7 +67,8 @@ namespace NDomain.Tests.Bus
 				var processor = new Processor(
 					"processor:" + i,
 					10, // concurrency level.. not really important for this test
-					new SubscriptionManager(this.subscriptionStore, this.subscriptionBroker),
+					//new SubscriptionManager(this.subscriptionStore, this.subscriptionBroker),
+					this.subscriptionManager,
 					this.messagingFactory,
 					NullLoggerFactory.Instance,
 					this.resolver);

@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System.Threading;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using NDomain.Logging;
 
 namespace NDomain.Bus
 {
@@ -31,17 +32,18 @@ namespace NDomain.Bus
     internal class DiagnosticsDispatcher : IMessageDispatcher
     {
         readonly IMessageDispatcher innerDispatcher;
+		readonly ILogger logger;
         readonly ConcurrentDictionary<string, Counter> metrics;
 
-        public DiagnosticsDispatcher(IMessageDispatcher innerDispatcher)
+        public DiagnosticsDispatcher(IMessageDispatcher innerDispatcher, ILoggerFactory loggerFactory)
         {
             this.innerDispatcher = innerDispatcher;
-            this.metrics = new ConcurrentDictionary<string, Counter>();
+			this.logger = loggerFactory.GetLogger(this.GetType());
+			this.metrics = new ConcurrentDictionary<string, Counter>();
         }
 
         public async Task ProcessMessage(TransportMessage message)
         {
-
             var sw = Stopwatch.StartNew();
             await this.innerDispatcher.ProcessMessage(message);
             sw.Stop();
@@ -51,7 +53,7 @@ namespace NDomain.Bus
             Interlocked.Increment(ref counter.NMessages);
             Interlocked.Add(ref counter.TotalMS, sw.ElapsedMilliseconds);
 
-            Trace.WriteLine(string.Format("Processed {0} in {1}ms with avg {2}ms", key, sw.ElapsedMilliseconds, counter.GetAvg().TotalMilliseconds));
+            this.logger.Info(string.Format("Processed {0} in {1}ms with avg {2}ms", key, sw.ElapsedMilliseconds, counter.GetAvg().TotalMilliseconds));
         }
     }
 }

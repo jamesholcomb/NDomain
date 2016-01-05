@@ -38,7 +38,7 @@ namespace NDomain.Bus
 
             this.worker = new MessageWorker(
                                 transportFactory.CreateInboundTransport(endpoint: endpoint),
-                                new DiagnosticsDispatcher(this), // TODO: build proper pipeline support
+                                new DiagnosticsDispatcher(this, loggerFactory), // TODO: build proper pipeline support
                                 loggerFactory, 
                                 concurrencyLevel);
         }

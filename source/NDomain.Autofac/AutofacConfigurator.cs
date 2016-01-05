@@ -11,28 +11,28 @@ namespace NDomain.Configuration
 {
     public static class AutofacConfigurator
     {
-        public static IoCConfigurator WithAutofac(this IoCConfigurator b, IContainer container)
+        public static IoCConfigurator WithAutofac(this IoCConfigurator b, ILifetimeScope container)
         {
-            b.Resolver = new AutofacDependencyResolver(container.BeginLifetimeScope());
+            b.Resolver = new AutofacDependencyResolver(container);
 
-            b.Configured += context =>
-            {
-                var builder = new ContainerBuilder();
-                builder.RegisterInstance(context);
+            //b.Configured += context =>
+            //{
+            //    var builder = new ContainerBuilder();
+            //    builder.RegisterInstance(context);
 
-                builder.RegisterInstance(context.CommandBus);
-                builder.RegisterInstance(context.EventBus);
+            //    builder.RegisterInstance(context.CommandBus);
+            //    builder.RegisterInstance(context.EventBus);
 
-                // usually command/event handlers
-                foreach (var knownType in b.KnownTypes)
-                {
-                    builder.RegisterType(knownType)
-                           .AsSelf()
-                           .PreserveExistingDefaults();
-                }
+            //    // usually command/event handlers
+            //    foreach (var knownType in b.KnownTypes)
+            //    {
+            //        builder.RegisterType(knownType)
+            //               .AsSelf()
+            //               .PreserveExistingDefaults();
+            //    }
 
-                builder.Update(container);
-            };
+            //    builder.Update(container);
+            //};
 
             return b;
         }
